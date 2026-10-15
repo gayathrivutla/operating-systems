@@ -1,0 +1,55 @@
+
+#include <stdio.h>
+
+int main(void)
+{
+    int n, i, time = 0, done = 0, idx;
+    int at[20], bt[20], rem[20], pr[20];
+    int ct[20], wt[20], tat[20];
+
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+    if (n < 1 || n > 20) return 1;
+
+    for (i = 0; i < n; i++) {
+        printf("Arrival, burst, priority of P%d: ", i + 1);
+        scanf("%d%d%d", &at[i], &bt[i], &pr[i]);
+        if (at[i] < 0 || bt[i] <= 0 || pr[i] < 0)
+            return 1;
+        rem[i] = bt[i];
+    }
+
+    while (done < n) {
+        idx = -1;
+
+        for (i = 0; i < n; i++) {
+            if (at[i] <= time && rem[i] > 0) {
+                if (idx == -1 || pr[i] < pr[idx])
+                    idx = i;
+            }
+        }
+
+        if (idx == -1) {
+            time++;
+            continue;
+        }
+
+        rem[idx]--;
+        time++;
+
+        if (rem[idx] == 0) {
+            ct[idx] = time;
+            done++;
+        }
+    }
+
+    printf("\nProcess\tAT\tBT\tPriority\tWT\tTAT\n");
+    for (i = 0; i < n; i++) {
+        tat[i] = ct[i] - at[i];
+        wt[i] = tat[i] - bt[i];
+        printf("P%d\t%d\t%d\t%d\t\t%d\t%d\n",
+               i + 1, at[i], bt[i], pr[i], wt[i], tat[i]);
+    }
+
+    return 0;
+}
