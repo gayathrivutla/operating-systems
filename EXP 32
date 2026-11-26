@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int p[] = {7,0,1,2,0,3,0,4,2,3};
+    int f[3] = {-1,-1,-1};
+    int time[3] = {-1,-1,-1};
+    int i, j, pos, hit, fault = 0;
+
+    printf("Page\tFrames\n");
+
+    for(i = 0; i < 10; i++) {
+        hit = -1;
+
+        for(j = 0; j < 3; j++)
+            if(f[j] == p[i])
+                hit = j;
+
+        if(hit != -1) {
+            time[hit] = i;
+        } else {
+            pos = 0;
+
+            for(j = 1; j < 3; j++)
+                if(time[j] < time[pos])
+                    pos = j;
+
+            f[pos] = p[i];
+            time[pos] = i;
+            fault++;
+        }
+
+        printf("%d\t", p[i]);
+
+        for(j = 0; j < 3; j++)
+            printf("%d ", f[j]);
+
+        printf("\n");
+    }
+
+    printf("Total page faults: %d\n", fault);
+
+    return 0;
+}
