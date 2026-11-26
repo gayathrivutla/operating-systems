@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int r[] = {98,183,37,122,14,124,65,67};
+    int head = 53, total = 0, i;
+
+    printf("Seek sequence: %d", head);
+
+    for(i = 0; i < 8; i++) {
+        total += abs(r[i]-head);
+        head = r[i];
+
+        printf(" -> %d", head);
+    }
+
+    printf("\nTotal head movement: %d\n", total);
+
+    return 0;
+}
