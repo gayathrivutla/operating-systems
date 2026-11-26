@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int b[] = {100, 500, 200, 300, 600};
+    int p[] = {212, 417, 112, 426};
+    int a[5], i, j, k, pos;
+    char *name[] = {"First Fit", "Best Fit", "Worst Fit"};
+
+    for(k = 0; k < 3; k++) {
+        for(i = 0; i < 5; i++)
+            a[i] = b[i];
+
+        printf("\n%s\n", name[k]);
+
+        for(i = 0; i < 4; i++) {
+            pos = -1;
+
+            for(j = 0; j < 5; j++) {
+                if(a[j] >= p[i]) {
+                    if(pos == -1 ||
+                       (k == 1 && a[j] < a[pos]) ||
+                       (k == 2 && a[j] > a[pos]))
+                        pos = j;
+
+                    if(k == 0)
+                        break;
+                }
+            }
+
+            if(pos != -1) {
+                printf("Process %d -> Block %d\n",
+                       i+1, pos+1);
+                a[pos] -= p[i];
+            } else {
+                printf("Process %d -> Not allocated\n", i+1);
+            }
+        }
+    }
+    return 0;
+}
