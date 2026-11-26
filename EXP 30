@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <pthread.h>
+
+void *function(void *arg) {
+    printf("Child thread is running\n");
+    pthread_exit(NULL);
+}
+
+int main() {
+    pthread_t t1, t2;
+
+    pthread_create(&t1, NULL, function, NULL);
+    pthread_create(&t2, NULL, function, NULL);
+
+    printf("Threads created successfully\n");
+
+    if(pthread_equal(t1, t2))
+        printf("Threads are equal\n");
+    else
+        printf("Threads are not equal\n");
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    printf("Threads joined successfully\n");
+    printf("Threads exited successfully\n");
+
+    return 0;
+}
