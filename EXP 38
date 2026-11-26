@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int r[] = {98,183,37,122,14,124,65,67};
+    int head = 53, total = 0;
+    int i, j, temp, pos;
+
+    for(i = 0; i < 8; i++) {
+        for(j = i+1; j < 8; j++) {
+            if(r[i] > r[j]) {
+                temp = r[i];
+                r[i] = r[j];
+                r[j] = temp;
+            }
+        }
+    }
+
+    for(pos = 0; pos < 8 && r[pos] < head; pos++);
+
+    printf("Seek sequence: %d", head);
+
+    for(i = pos-1; i >= 0; i--) {
+        total += abs(head-r[i]);
+        head = r[i];
+        printf(" -> %d", head);
+    }
+
+    total += head;
+    head = 0;
+    printf(" -> 0");
+
+    for(i = pos; i < 8; i++) {
+        total += abs(head-r[i]);
+        head = r[i];
+        printf(" -> %d", head);
+    }
+
+    printf("\nTotal head movement: %d\n", total);
+
+    return 0;
+}
